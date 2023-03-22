@@ -1,0 +1,150 @@
+
+
+
+
+More Instant Messaging Interoperability                       T. Ralston
+Internet-Draft                          The Matrix.org Foundation C.I.C.
+Intended status: Standards Track                           22 March 2023
+Expires: 23 September 2023
+
+
+                         Linearized Matrix API
+              draft-ralston-mimi-linearized-matrix-latest
+
+Abstract
+
+   Matrix is an existing openly specified decentralized secure
+   communications protocol able to provide a framework for instant
+   messaging interoperability.  Matrix rooms currently use a Directed
+   Acyclic Graph (DAG) for persisting events/messages.  Servers
+   broadcast their changes to the DAG to every other server in order to
+   create new events.
+
+   This model provides excellent decentralization characteristics,
+   however is complex when aiming to adopt Matrix as an interoperable
+   chat protocol, such as with the emergence of the European Union's
+   Digital Markets Act (DMA).
+
+   This document explores an API surface for Matrix which knowingly
+   trades some of the decentralization aspects for ease of
+   interoperability at a per-room level.  We call this API surface
+   "Linearized Matrix".
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://turt2live.github.io/ietf-mimi-linearized-matrix/draft-
+   ralston-mimi-linearized-matrix.html.  Status information for this
+   document may be found at https://datatracker.ietf.org/doc/draft-
+   ralston-mimi-linearized-matrix/.
+
+   Discussion of this document takes place on the More Instant Messaging
+   Interoperability Working Group mailing list (mailto:mimi@ietf.org),
+   which is archived at https://mailarchive.ietf.org/arch/browse/mimi/.
+   Subscribe at https://www.ietf.org/mailman/listinfo/mimi/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/turt2live/ietf-mimi-linearized-matrix.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 23 September 2023.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+   3.  Security Considerations
+   4.  IANA Considerations
+   5.  Normative References
+   Acknowledgments
+   Author's Address
+
+1.  Introduction
+
+   At a high level, rooms using Linearized Matrix have a single server
+   which owns that room.  The owner can change, but will typically be
+   the server which created the room.  All other servers are known as
+   participating servers and call the owner server to send events.  The
+   owner server is then responsible for informing all the other servers
+   of any changes/messages in the room.
+
+   Many aspects for how Matrix works as an interoperable messaging
+   framework is described by [I-D.ralston-mimi-matrix-framework].  This
+   document replaces the eventual consistency model, federation API, and
+   DAG-related features of the framework document by presenting a
+   simpler interface for interacting with Matrix rooms, without being
+   incompatible with those same replaced components.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Security Considerations
+
+   TODO: Security * We sign events to prevent the owner server lying.
+
+4.  IANA Considerations
+
+   This document has no IANA actions.
+
+5.  Normative References
+
+   [I-D.ralston-mimi-matrix-framework]
+              Ralston, T., "Matrix as a Messaging Framework", Work in
+              Progress, Internet-Draft, draft-ralston-mimi-matrix-
+              framework-01, 13 March 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ralston-mimi-
+              matrix-framework-01>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Author's Address
+
+   Travis Ralston
+   The Matrix.org Foundation C.I.C.
+   Email: travisr@matrix.org
