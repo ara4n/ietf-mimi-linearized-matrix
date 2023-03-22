@@ -1318,7 +1318,8 @@ to be ed25519 keys.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">In the existing Matrix Federation APIs, a PDU <span>[<a href="#MxV10PDUFormat" class="cite xref">MxV10PDUFormat</a>]</span> contains an event and has several
 DAG-specific fields to it. When using the Linearized Matrix API, we introduce a concept of a <em>Linear
 PDU</em> which looks similar to a regular room event, but has all non-essential fields removed.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3"><code>jsonc
+<div class="lang-jsonc sourcecode" id="section-5-3">
+<pre>
 {
   "room_id": "!room:example.org", // the room ID the event is sent within
   "type": "org.example.event_type", // the implied (or explicit) event type
@@ -1333,7 +1334,8 @@ PDU</em> which looks similar to a regular room event, but has all non-essential 
     "sha256": "&lt;content hash, just like in Matrix today&gt;"
   }
 }
-</code><a href="#section-5-3" class="pilcrow">¶</a></p>
+</pre><a href="#section-5-3" class="pilcrow">¶</a>
+</div>
 <p id="section-5-4"><span>[<a href="#MxContentHashCalculation" class="cite xref">MxContentHashCalculation</a>]</span><a href="#section-5-4" class="pilcrow">¶</a></p>
 <p id="section-5-5">The Linear PDU is then redacted <span>[<a href="#MxRedaction" class="cite xref">MxRedaction</a>]</span>, canonicalized <span>[<a href="#MxCanonicalJSON" class="cite xref">MxCanonicalJSON</a>]</span>, and signed
 <span>[<a href="#MxSigning" class="cite xref">MxSigning</a>]</span>. The signature is supplied to the owner server alongside the event itself for sending
@@ -1471,7 +1473,8 @@ DAG-compatible servers in the room.<a href="#section-12-3" class="pilcrow">¶</a
 possible to reconstruct a Linear PDU from a Delegated Linear PDU. Similarly, a DAG-ready PDU can be redacted
 down to a Delegated Linear PDU with ease.<a href="#section-12-4" class="pilcrow">¶</a></p>
 <p id="section-12-5">A complete DAG-ready PDU would look like:<a href="#section-12-5" class="pilcrow">¶</a></p>
-<p id="section-12-6"><code>jsonc
+<div class="lang-jsonc sourcecode" id="section-12-6">
+<pre>
 {
   "room_id": "!room:example.org", // the room ID the event is sent within
   "type": "org.example.event_type", // the implied (or explicit) event type
@@ -1502,7 +1505,8 @@ down to a Delegated Linear PDU with ease.<a href="#section-12-4" class="pilcrow"
     }
   }
 }
-</code><a href="#section-12-6" class="pilcrow">¶</a></p>
+</pre><a href="#section-12-6" class="pilcrow">¶</a>
+</div>
 <p id="section-12-7">When validating the signatures <span>[<a href="#MxSignatureValidation" class="cite xref">MxSignatureValidation</a>]</span> on this PDU, DAG-capable servers would apply the
 following algorithm. If at any point the check fails, the algorithm bails.<a href="#section-12-7" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-12-8">

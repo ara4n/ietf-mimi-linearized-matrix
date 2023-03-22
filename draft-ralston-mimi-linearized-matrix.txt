@@ -196,14 +196,20 @@ Table of Contents
    PDU_ which looks similar to a regular room event, but has all non-
    essential fields removed.
 
-   jsonc { "room_id": "!room:example.org", // the room ID the event is
-   sent within "type": "org.example.event_type", // the implied (or
-   explicit) event type "state_key": "", // for state events, even if an
-   empty string "sender": "@user:example.org", // the user ID of the
-   sender "origin_server_ts": 123456789, // milliseconds since epoch
-   "authorized_sending_server": "owner.example.org", // the domain of
-   the room owner "content": { // the normal event content }, "hashes":
-   { "sha256": "<content hash, just like in Matrix today>" } }
+   {
+     "room_id": "!room:example.org", // the room ID the event is sent within
+     "type": "org.example.event_type", // the implied (or explicit) event type
+     "state_key": "", // for state events, even if an empty string
+     "sender": "@user:example.org", // the user ID of the sender
+     "origin_server_ts": 123456789, // milliseconds since epoch
+     "authorized_sending_server": "owner.example.org", // the domain of the room owner
+     "content": {
+       // the normal event content
+     },
+     "hashes": {
+       "sha256": "<content hash, just like in Matrix today>"
+     }
+   }
 
    [MxContentHashCalculation]
 
@@ -362,22 +368,36 @@ Table of Contents
 
    A complete DAG-ready PDU would look like:
 
-   jsonc { "room_id": "!room:example.org", // the room ID the event is
-   sent within "type": "org.example.event_type", // the implied (or
-   explicit) event type "state_key": "", // for state events, even if an
-   empty string "sender": "@user:example.org", // the user ID of the
-   sender "origin_server_ts": 123456789,
-   "original_authorized_sending_server": "owner.example.org", // the
-   domain of the room owner "authorized_sending_server":
-   "dag.example.org", // DAG-capable server; see bridging considerations
-   for selection approach "content": { // the normal event content },
-   "hashes": { "sha256": "<content hash, just like in Matrix today>" },
-   // other event format stuff: "auth_events": ["$event1", "$event2",
-   "$etc"], "depth": 42, "prev_events": ["$event3", "$event4", "$etc2"],
-   "signatures": { "dag.example.org": { "ed25519:abc": "<signature for
-   PDU>" }, "owner.example.org": { "ed25519:def": "<signature for
-   Delegated Linear PDU>" }, "example.org": { "ed25519:ghi": "<signature
-   for non-delegated Linear PDU>" } } }
+   {
+     "room_id": "!room:example.org", // the room ID the event is sent within
+     "type": "org.example.event_type", // the implied (or explicit) event type
+     "state_key": "", // for state events, even if an empty string
+     "sender": "@user:example.org", // the user ID of the sender
+     "origin_server_ts": 123456789,
+     "original_authorized_sending_server": "owner.example.org", // the domain of the room owner
+     "authorized_sending_server": "dag.example.org", // DAG-capable server; see bridging considerations for selection approach
+     "content": {
+       // the normal event content
+     },
+     "hashes": {
+       "sha256": "<content hash, just like in Matrix today>"
+     },
+     // other event format stuff:
+     "auth_events": ["$event1", "$event2", "$etc"],
+     "depth": 42,
+     "prev_events": ["$event3", "$event4", "$etc2"],
+     "signatures": {
+       "dag.example.org": {
+         "ed25519:abc": "<signature for PDU>"
+       },
+       "owner.example.org": {
+         "ed25519:def": "<signature for Delegated Linear PDU>"
+       },
+       "example.org": {
+         "ed25519:ghi": "<signature for non-delegated Linear PDU>"
+       }
+     }
+   }
 
    When validating the signatures [MxSignatureValidation] on this PDU,
    DAG-capable servers would apply the following algorithm.  If at any
